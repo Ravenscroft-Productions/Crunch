@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 
@@ -18,6 +19,8 @@ ACPlayerCharacter::ACPlayerCharacter()
 	ViewCam->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 
 	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 }
 
 void ACPlayerCharacter::PawnClientRestart()
@@ -43,6 +46,7 @@ void ACPlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	{
 		EnhancedInputComp->BindAction(JumpInputAction, ETriggerEvent::Triggered, this, &ACPlayerCharacter::Jump);
 		EnhancedInputComp->BindAction(LookInputAction, ETriggerEvent::Triggered, this, &ACPlayerCharacter::HandleLookInput);
+		EnhancedInputComp->BindAction(MoveInputAction, ETriggerEvent::Triggered, this, &ACPlayerCharacter::HandleMoveInput);
 	}
 }
 
@@ -52,4 +56,22 @@ void ACPlayerCharacter::HandleLookInput(const FInputActionValue& InputActionValu
 
 	AddControllerPitchInput(-InputVal.Y);
 	AddControllerYawInput(InputVal.X);
+}
+
+void ACPlayerCharacter::HandleMoveInput(const FInputActionValue& InputActionValue)
+{
+	FVector2D InputVal = InputActionValue.Get<FVector2D>();
+	InputVal.Normalize();
+
+	AddMovementInput(GetMoveFwdDir() * InputVal.Y + GetLookRightDir() * InputVal.X);
+}
+
+FVector ACPlayerCharacter::GetLookRightDir() const
+{
+	return ViewCam->GetRightVector();
+}
+
+FVector ACPlayerCharacter::GetMoveFwdDir() const
+{
+	return FVector::CrossProduct(GetLookRightDir(), FVector::UpVector);
 }
