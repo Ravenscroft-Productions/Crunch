@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "CCharacter.generated.h"
 
+class UWidgetComponent;
 class UCAttributeSet;
 class UCAbilitySystemComponent;
 
@@ -43,4 +44,13 @@ private:
 
 	UPROPERTY()
 	UCAttributeSet* CAttributeSet;
+	
+	/**********************************************************************/
+	/*                                   UI                               */
+	/**********************************************************************/
+private:
+	UPROPERTY(VisibleDefaultsOnly, Category = "UI")
+	UWidgetComponent* OverheadWidgetComponent;
+
+	void ConfigureOverheadStatusWidget();
 };
