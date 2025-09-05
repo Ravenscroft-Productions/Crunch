@@ -56,4 +56,14 @@ private:
 	UWidgetComponent* OverheadWidgetComponent;
 
 	void ConfigureOverheadStatusWidget();
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatsGaugeVisibilityCheckUpdateInterval = 1.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatsGaugeVisibilityRangeSquared = 10000000.0f;
+	
+	FTimerHandle OverheadStatsGaugeVisibilityUpdateTimerHandle;
+
+	void UpdateOverheadStatsGaugeVisibility();
 };
