@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class CRUNCH_API UCAbilitySystemStatics : public UBlueprintFunctionLibrary
+class CRUNCH_API UCAbilitySystemStatics : public UObject
 {
 	GENERATED_BODY()
 public:
