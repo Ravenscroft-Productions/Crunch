@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "CPlayerCharacter.generated.h"
 
+enum class ECAbilityInputID : uint8;
 class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
@@ -29,6 +30,13 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	UCameraComponent* ViewCam;
 
+	FVector GetLookRightDir() const;
+	FVector GetMoveFwdDir() const;
+	
+	/********************************************************/
+	/*                       Input                          */
+	/********************************************************/
+private:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* JumpInputAction;
 
@@ -37,13 +45,14 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* MoveInputAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TMap<ECAbilityInputID, UInputAction*> GameplayAbilityInputActions;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputMappingContext* GameplayInputMappingContext;
 
 	void HandleLookInput(const FInputActionValue& InputActionValue);
 	void HandleMoveInput(const FInputActionValue& InputActionValue);
-
-	FVector GetLookRightDir() const;
-	FVector GetMoveFwdDir() const;
+	void HandleAbilityInput(const FInputActionValue& InputActionValue, ECAbilityInputID InputID);
 };
