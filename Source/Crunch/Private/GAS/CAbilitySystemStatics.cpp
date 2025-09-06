@@ -5,5 +5,5 @@
 
 FGameplayTag UCAbilitySystemStatics::GetBasicAttackAbilityTag()
 {
-	return FGameplayTag::RequestGameplayTag("ability.basicattack");
+	return FGameplayTag::RequestGameplayTag("Ability.BasicAttack");
 }
