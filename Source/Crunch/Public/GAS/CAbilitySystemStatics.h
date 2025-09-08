@@ -15,4 +15,5 @@ class CRUNCH_API UCAbilitySystemStatics : public UObject
 	GENERATED_BODY()
 public:
 	static FGameplayTag GetBasicAttackAbilityTag();
+	static FGameplayTag GetDeadStatTag();
 };

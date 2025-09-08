@@ -5,6 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GAS/CAbilitySystemComponent.h"
+#include "GAS/CAbilitySystemStatics.h"
 #include "GAS/CAttributeSet.h"
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/OverheadStatsGauge.h"
@@ -20,6 +21,8 @@ ACCharacter::ACCharacter()
 
 	OverheadWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("Overhead Widget Component");
 	OverheadWidgetComponent->SetupAttachment(GetRootComponent());
+
+	BindGASChangeDelegates();
 }
 
 void ACCharacter::ServerSideInit()
@@ -74,6 +77,26 @@ UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 	return CAbilitySystemComponent;
 }
 
+void ACCharacter::BindGASChangeDelegates()
+{
+	if (CAbilitySystemComponent)
+	{
+		CAbilitySystemComponent->RegisterGameplayTagEvent(UCAbilitySystemStatics::GetDeadStatTag()).AddUObject(this, &ACCharacter::DeathTagUpdated);
+	}
+}
+
+void ACCharacter::DeathTagUpdated(const FGameplayTag Tag, int32 NewCount)
+{
+	if (NewCount != 0)
+	{
+		StartDeathSequence();
+	}
+	else
+	{
+		Respawn();
+	}
+}
+
 void ACCharacter::ConfigureOverheadStatusWidget()
 {
 	if (!OverheadWidgetComponent) return;
@@ -102,5 +125,15 @@ void ACCharacter::UpdateOverheadStatsGaugeVisibility()
 		float DistSquared = FVector::DistSquared(GetActorLocation(), LocalPlayerPawn->GetActorLocation());
 		OverheadWidgetComponent->SetHiddenInGame(DistSquared > OverheadStatsGaugeVisibilityRangeSquared);
 	}
+}
+
+void ACCharacter::StartDeathSequence()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dead!"));
+}
+
+void ACCharacter::Respawn()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Respawn!"));
 }
 
