@@ -70,10 +70,19 @@ private:
 	FTimerHandle OverheadStatsGaugeVisibilityUpdateTimerHandle;
 
 	void UpdateOverheadStatsGaugeVisibility();
+	void SetStatusGaugeEnabled(bool bIsEnabled);
 	
 	/**********************************************************************/
 	/*                         Death & Respawn                            */
 	/**********************************************************************/
+	UPROPERTY(EditDefaultsOnly, Category = "Death")
+	UAnimMontage* DeathMontage;
+
+	void PlayDeathAnimation();
+
 	void StartDeathSequence();
 	void Respawn();
+
+	virtual void OnDead();
+	virtual void OnRespawn();
 };
