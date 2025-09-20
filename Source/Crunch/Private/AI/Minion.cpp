@@ -2,11 +2,8 @@
 
 
 #include "AI/Minion.h"
-
-#include "AbilitySystemComponent.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "GAS/CAbilitySystemStatics.h"
 
 void AMinion::SetGenericTeamId(const FGenericTeamId& NewTeamID)
 {
@@ -16,12 +13,12 @@ void AMinion::SetGenericTeamId(const FGenericTeamId& NewTeamID)
 
 bool AMinion::IsActive() const
 {
-	return !GetAbilitySystemComponent()->HasMatchingGameplayTag(UCAbilitySystemStatics::GetDeadStatTag());
+	return !IsDead();
 }
 
 void AMinion::Activate()
 {
-	GetAbilitySystemComponent()->RemoveActiveEffectsWithGrantedTags(FGameplayTagContainer(UCAbilitySystemStatics::GetDeadStatTag()));
+	RespawnImmediately();
 }
 
 void AMinion::SetGoal(AActor* Goal)

@@ -79,6 +79,11 @@ private:
 	/**********************************************************************/
 	/*                         Death & Respawn                            */
 	/**********************************************************************/
+public:
+	bool IsDead() const;
+	void RespawnImmediately();
+	
+private:
 	FTransform MeshRelativeTransform;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Death")
