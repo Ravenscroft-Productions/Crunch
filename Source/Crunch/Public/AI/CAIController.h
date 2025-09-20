@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "CAIController.generated.h"
 
+struct FGameplayTag;
 class UAISenseConfig_Sight;
 
 UCLASS()
@@ -43,4 +44,9 @@ private:
 	AActor* GetNextPerceivedActor() const;
 
 	void ForgetActorIfDead(AActor* ActorToForget);
+
+	void ClearAndDisableAllSenses();
+	void EnableAllSenses();
+
+	void PawnDeadTagUpdated(const FGameplayTag Tag, int32 Count);
 };
