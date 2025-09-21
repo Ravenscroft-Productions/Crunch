@@ -16,7 +16,8 @@ class CRUNCH_API UUpperCut : public UCGameplayAbility
 
 public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-
+	UUpperCut();
+	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Launch")
 	TSubclassOf<UGameplayEffect> LaunchDamageEffect;
@@ -37,6 +38,9 @@ private:
 
 	UFUNCTION()
 	void HandleComboChangedEvent(FGameplayEventData EventData);
+
+	UFUNCTION()
+	void HandleComboCommitEvent(FGameplayEventData EventData);
 
 	FName NextComboName;
 };

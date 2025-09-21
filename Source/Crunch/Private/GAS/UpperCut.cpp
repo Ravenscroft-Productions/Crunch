@@ -6,7 +6,13 @@
 #include "GameplayTagsManager.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "GAS/CAbilitySystemStatics.h"
 #include "GAS/GA_Combo.h"
+
+UUpperCut::UUpperCut()
+{
+	BlockAbilitiesWithTag.AddTag(UCAbilitySystemStatics::GetBasicAttackAbilityTag());
+}
 
 void UUpperCut::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
@@ -53,6 +59,10 @@ void UUpperCut::StartLaunching(FGameplayEventData EventData)
 	UAbilityTask_WaitGameplayEvent* WaitComboChangeEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, UGA_Combo::GetComboChangedEventTag(), nullptr, false, false);
 	WaitComboChangeEvent->EventReceived.AddDynamic(this, &UUpperCut::HandleComboChangedEvent);
 	WaitComboChangeEvent->ReadyForActivation();
+
+	UAbilityTask_WaitGameplayEvent* WaitComboCommitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, UCAbilitySystemStatics::GetBasicAttackInputPressedTag());
+	WaitComboCommitEvent->EventReceived.AddDynamic(this, &UUpperCut::HandleComboCommitEvent);
+	WaitComboCommitEvent->ReadyForActivation();
 }
 
 void UUpperCut::HandleComboChangedEvent(FGameplayEventData EventData)
@@ -68,4 +78,9 @@ void UUpperCut::HandleComboChangedEvent(FGameplayEventData EventData)
 	UGameplayTagsManager::Get().SplitGameplayTagFName(EventTag, TagNames);
 	NextComboName = TagNames.Last();
 	UE_LOG(LogTemp, Warning, TEXT("Next Combo is: %s"), *NextComboName.ToString());
+}
+
+void UUpperCut::HandleComboCommitEvent(FGameplayEventData EventData)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Combo Change Commit"));
 }
