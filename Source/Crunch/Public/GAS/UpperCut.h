@@ -28,6 +28,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Launch")
 	float UpperCutLaunchSpeed = 1000.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Launch")
+	float UpperCutComboHoldSpeed = 100.0f;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* UpperCutMontage;
 
@@ -41,6 +44,9 @@ private:
 
 	UFUNCTION()
 	void HandleComboCommitEvent(FGameplayEventData EventData);
+
+	UFUNCTION()
+	void HandleComboDamageEvent(FGameplayEventData EventData);
 
 	FName NextComboName;
 };
