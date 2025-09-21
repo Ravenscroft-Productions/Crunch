@@ -7,6 +7,7 @@
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
 #include "GAS/CAbilitySystemStatics.h"
+#include "GAS/CGameplayAbilityTypes.h"
 #include "GAS/GA_Combo.h"
 
 UUpperCut::UUpperCut()
@@ -41,6 +42,19 @@ void UUpperCut::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 FGameplayTag UUpperCut::GetUpperCutLaunchTag()
 {
 	return FGameplayTag::RequestGameplayTag("Ability.UpperCut.Launch");
+}
+
+const FGenericDamageEffectDef* UUpperCut::GetDamageEffectDefForCurrentCombo() const
+{
+	UAnimInstance* OwnerAnimInstance = GetOwnerAnimInstance();
+	if (OwnerAnimInstance)
+	{
+		FName CurrentComboName = OwnerAnimInstance->Montage_GetCurrentSection(UpperCutMontage);
+		const FGenericDamageEffectDef* EffectDef = ComboDamageMap.Find(CurrentComboName);
+		return EffectDef;
+	}
+
+	return nullptr;
 }
 
 void UUpperCut::StartLaunching(FGameplayEventData EventData)
@@ -98,10 +112,15 @@ void UUpperCut::HandleComboDamageEvent(FGameplayEventData EventData)
 	{
 		TArray<FHitResult> TargetHitResults = GetHitResultFromSweepLocationTargetData(EventData.TargetData, TargetSweepSphereRadius, ETeamAttitude::Hostile, ShouldDrawDebug());
 		PushTarget(GetAvatarActorFromActorInfo(), FVector::UpVector * UpperCutComboHoldSpeed);
+		const FGenericDamageEffectDef* EffectDef = GetDamageEffectDefForCurrentCombo();
+
+		if (!EffectDef) return;
+		
 		for (FHitResult& HitResult : TargetHitResults)
 		{
-			PushTarget(HitResult.GetActor(), FVector::UpVector * UpperCutComboHoldSpeed);
-			ApplyGameplayEffectToHitResultActor(HitResult, LaunchDamageEffect, GetAbilityLevel(CurrentSpecHandle, CurrentActorInfo));
+			FVector PushVel = GetAvatarActorFromActorInfo()->GetActorTransform().TransformVector(EffectDef->PushVelocity);			
+			PushTarget(HitResult.GetActor(), PushVel);
+			ApplyGameplayEffectToHitResultActor(HitResult, EffectDef->DamageEffect, GetAbilityLevel(CurrentSpecHandle, CurrentActorInfo));
 		}
 	}
 }
