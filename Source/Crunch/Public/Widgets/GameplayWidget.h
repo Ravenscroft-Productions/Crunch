@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "GameplayWidget.generated.h"
 
+class UAbilityListView;
 enum class ECAbilityInputID : uint8;
 class UGameplayAbility;
 class UAbilitySystemComponent;
@@ -27,6 +28,9 @@ private:
 
 	UPROPERTY(meta=(BindWidget))
 	UValueGauge* ManaBar;
+
+	UPROPERTY(meta=(BindWidget))
+	UAbilityListView* AbilityListView;
 
 	UPROPERTY()
 	UAbilitySystemComponent* OwnerAbilitySystemComponent;
