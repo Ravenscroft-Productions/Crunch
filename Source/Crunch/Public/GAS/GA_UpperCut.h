@@ -5,19 +5,19 @@
 #include "CoreMinimal.h"
 #include "CGameplayAbility.h"
 #include "CGameplayAbilityTypes.h"
-#include "UpperCut.generated.h"
+#include "GA_UpperCut.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CRUNCH_API UUpperCut : public UCGameplayAbility
+class CRUNCH_API UGA_UpperCut : public UCGameplayAbility
 {
 	GENERATED_BODY()
 
 public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-	UUpperCut();
+	UGA_UpperCut();
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combo")
