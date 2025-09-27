@@ -17,8 +17,10 @@ public:
 	ATargetActor_GroundPick();
 	
 	void SetTargetAreaRadius(float NewRadius);
+	FORCEINLINE void SetTargetTraceRange(float NewRange) { TargetTraceRange = NewRange; }
 	virtual void ConfirmTargetingAndContinue() override;
 	void SetTargetOptions(bool bTargetFriendly, bool bTargetEnemy = true);
+	FORCEINLINE void SetShouldDrawDebug(bool bDrawDebug) { bShouldDrawDebug = bDrawDebug; }
 	
 protected:
 	bool bShouldTargetEnemy = true;
@@ -33,4 +35,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	float TargetTraceRange = 2000.0f;
+
+	bool bShouldDrawDebug = false;
 };
