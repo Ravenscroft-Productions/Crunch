@@ -38,8 +38,11 @@ private:
 	TSubclassOf<ATargetActor_GroundPick> TargetActorClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
-	UAnimMontage* GroundBlastMontage;
+	UAnimMontage* TargetingMontage;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* CastMontage;
+	
 	UFUNCTION()
 	void TargetConfirmed(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
