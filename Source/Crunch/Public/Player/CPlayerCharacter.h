@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "CPlayerCharacter.generated.h"
 
+class UCHeroAttributeSet;
 enum class ECAbilityInputID : uint8;
 class UInputMappingContext;
 class UInputAction;
@@ -38,6 +39,9 @@ private:
 	/********************************************************/
 private:
 	virtual void OnAimStateChanged(bool bIsAiming) override;
+
+	UPROPERTY()
+	UCHeroAttributeSet* HeroAttributeSet;
 	
 	/********************************************************/
 	/*                       Input                          */
