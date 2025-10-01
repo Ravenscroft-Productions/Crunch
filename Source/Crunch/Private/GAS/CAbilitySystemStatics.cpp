@@ -3,6 +3,9 @@
 
 #include "GAS/CAbilitySystemStatics.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "Abilities/GameplayAbility.h"
 
 FGameplayTag UCAbilitySystemStatics::GetBasicAttackAbilityTag()
@@ -53,6 +56,25 @@ FGameplayTag UCAbilitySystemStatics::GetManaFullStatTag()
 FGameplayTag UCAbilitySystemStatics::GetManaEmptyStatTag()
 {
 	return FGameplayTag::RequestGameplayTag("Stats.Mana.Empty");
+}
+
+FGameplayTag UCAbilitySystemStatics::GetHeroRoleTag()
+{
+	return FGameplayTag::RequestGameplayTag("Role.Hero");
+}
+
+bool UCAbilitySystemStatics::IsHero(const AActor* ActorToCheck)
+{
+	const IAbilitySystemInterface* ActorASI = Cast<IAbilitySystemInterface>(ActorToCheck);
+	if (ActorASI)
+	{
+		UAbilitySystemComponent* ActorASC = ActorASI->GetAbilitySystemComponent();
+		if (ActorASC)
+		{
+			return ActorASC->HasMatchingGameplayTag(GetHeroRoleTag());
+		}
+	}
+	return false;
 }
 
 float UCAbilitySystemStatics::GetStaticCooldownDurationForAbility(const UGameplayAbility* Ability)
