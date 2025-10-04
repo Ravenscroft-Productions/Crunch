@@ -51,6 +51,9 @@ public:
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_SendGameplayEventToSelf(const FGameplayTag& EventTag, const FGameplayEventData& EventData);
+
+protected:
+	void UpgradeAbilityWithInputID(ECAbilityInputID InputID);
 	
 private:
 	void BindGASChangeDelegates();
