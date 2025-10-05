@@ -26,9 +26,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Launch")
 	TSubclassOf<UGameplayEffect> LaunchDamageEffect;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
-	float TargetSweepSphereRadius = 80.0f;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Launch")
 	float UpperCutLaunchSpeed = 1000.0f;
 
