@@ -34,7 +34,7 @@ class CRUNCH_API UPDA_ShopItem : public UPrimaryDataAsset
 public:
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;
 	static FPrimaryAssetType GetShopItemAssetType();
-	UTexture2D* GetIcon();
+	UTexture2D* GetIcon() const;
 	float GetPrice() const { return Price; }
 	float GetSellPrice() const { return Price / 2.0f; }
 	FText GetItemName() const { return ItemName; }

@@ -40,7 +40,7 @@ FPrimaryAssetType UPDA_ShopItem::GetShopItemAssetType()
 	return FPrimaryAssetType("ShopItem");
 }
 
-UTexture2D* UPDA_ShopItem::GetIcon()
+UTexture2D* UPDA_ShopItem::GetIcon() const
 {
 	return Icon.LoadSynchronous();
 }
