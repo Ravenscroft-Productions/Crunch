@@ -14,6 +14,7 @@
 #include "GAS/CAbilitySystemStatics.h"
 #include "GAS/CGameplayAbilityTypes.h"
 #include "GAS/CHeroAttributeSet.h"
+#include "Inventory/InventoryComponent.h"
 
 
 ACPlayerCharacter::ACPlayerCharacter()
@@ -31,6 +32,7 @@ ACPlayerCharacter::ACPlayerCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 
 	HeroAttributeSet = CreateDefaultSubobject<UCHeroAttributeSet>("Hero Attribute Set");
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Inventory Component");
 }
 
 void ACPlayerCharacter::PawnClientRestart()

@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "CPlayerCharacter.generated.h"
 
+class UInventoryComponent;
 class UCHeroAttributeSet;
 enum class ECAbilityInputID : uint8;
 class UInputMappingContext;
@@ -101,4 +102,10 @@ private:
 
 	void LerpCameraToLocalOffsetLocation(const FVector& Goal);
 	void TickCameraLocalOffsetLerp(FVector Goal);
+
+	/********************************************************/
+	/*                      Inventory                       */
+	/********************************************************/
+private:
+	UInventoryComponent* InventoryComponent;
 };
