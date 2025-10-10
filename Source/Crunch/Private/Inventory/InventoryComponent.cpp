@@ -55,6 +55,7 @@ void UInventoryComponent::GrantItem(const UPDA_ShopItem* NewItem)
 	OnItemAdded.Broadcast(InventoryItem);
 	UE_LOG(LogTemp, Warning, TEXT("Server Adding Shop Item: %s, with Id: %d"), *InventoryItem->GetShopItem()->GetItemName().ToString(), NewHandle.GetHandleId());
 	Client_ItemAdded(NewHandle, NewItem);
+	InventoryItem->ApplyGASModifications(OwnerAbilitySystemComponent);
 }
 
 void UInventoryComponent::Client_ItemAdded_Implementation(FInventoryItemHandle AssignedHandle, const UPDA_ShopItem* Item)

@@ -3,6 +3,9 @@
 
 #include "Inventory/InventoryItem.h"
 
+#include "AbilitySystemComponent.h"
+#include "Inventory/PDA_ShopItem.h"
+
 FInventoryItemHandle::FInventoryItemHandle()
 	: HandleId(GetInvalidId())
 {	
@@ -54,4 +57,32 @@ void UInventoryItem::InitItem(const FInventoryItemHandle& NewHandle, const UPDA_
 {
 	Handle = NewHandle;
 	ShopItem = NewShopItem;
+}
+
+void UInventoryItem::ApplyGASModifications(UAbilitySystemComponent* AbilitySystemComponent)
+{
+	if (!GetShopItem() || !AbilitySystemComponent) return;
+
+	if (!AbilitySystemComponent->GetOwner() || !AbilitySystemComponent->GetOwner()->HasAuthority()) return;
+
+	TSubclassOf<UGameplayEffect> EquipEffect = GetShopItem()->GetEquippedEffect();
+	if (EquipEffect)
+	{
+		AppliedEquippedEffectHandle = AbilitySystemComponent->BP_ApplyGameplayEffectToSelf(EquipEffect, 1, AbilitySystemComponent->MakeEffectContext());
+	}
+
+	TSubclassOf<UGameplayAbility> GrantedAbility = GetShopItem()->GetGrantedAbility();
+	if (GrantedAbility)
+	{
+		const FGameplayAbilitySpec* FoundSpec = AbilitySystemComponent->FindAbilitySpecFromClass(GrantedAbility);
+		if (FoundSpec)
+		{
+			GrantedAbilitySpecHandle = FoundSpec->Handle;
+		}
+		else
+		{
+			GrantedAbilitySpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GrantedAbility));
+		}
+		
+	}
 }
