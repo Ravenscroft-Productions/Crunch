@@ -30,6 +30,11 @@ public:
 	void ItemSlotChanged(const FInventoryItemHandle& Handle, int NewSlotNumber);
 	UInventoryItem* GetInventoryItemByHandle(const FInventoryItemHandle& Handle) const;
 
+	bool IsFullFor(const UPDA_ShopItem* Item) const;
+	
+	bool IsAllSlotOccupied() const;
+	UInventoryItem* GetAvailableStackForItem(const UPDA_ShopItem* Item) const; 
+
 protected:
 	virtual void BeginPlay() override;
 

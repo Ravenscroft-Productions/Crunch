@@ -44,6 +44,20 @@ class CRUNCH_API UInventoryItem : public UObject
 {
 	GENERATED_BODY()
 public:
+
+	// Returns true if was able to add.
+	bool AddStackCount();
+
+	// Returns true if the stack is not empty after reducing.
+	bool ReduceStackCount();
+
+	// Returns true if was able to set.
+	bool SetStackCount(int NewStackCount);
+	
+	bool IsStackFull() const;
+	
+	bool IsForItem(const UPDA_ShopItem* Item) const;
+	
 	UInventoryItem();
 	bool IsValid() const;
 	void InitItem(const FInventoryItemHandle&  NewHandle, const UPDA_ShopItem* NewShopItem);
