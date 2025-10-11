@@ -18,9 +18,11 @@ class CRUNCH_API UInventoryItemWidget : public UItemWidget
 public:
 	virtual void NativeConstruct() override;
 	bool IsEmpty() const;
+	void SetSlotNumber(int NewSlotNumber);
 	void UpdateInventoryItem(const UInventoryItem* Item);
 	void EmptySlot();
 	FORCEINLINE int GetSlotNumber() const { return SlotNumber; }
+	
 		
 private:
 	void UpdateStackCount();
