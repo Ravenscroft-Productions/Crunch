@@ -94,6 +94,8 @@ void UInventoryComponent::Server_Purchase_Implementation(const UPDA_ShopItem* It
 
 	if (GetGold() < ItemToPurchase->GetPrice()) return;
 
+	if (InventoryMap.Num() >= GetCapacity()) return;
+
 	OwnerAbilitySystemComponent->ApplyModToAttribute(UCHeroAttributeSet::GetGoldAttribute(), EGameplayModOp::Additive, -ItemToPurchase->GetPrice());
 	GrantItem(ItemToPurchase);
 }
