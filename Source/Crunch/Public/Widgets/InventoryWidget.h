@@ -20,6 +20,7 @@ class CRUNCH_API UInventoryWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	virtual void NativeConstruct() override;
+	virtual void NativeOnFocusChanging(const FWeakWidgetPath& PreviousFocusPath, const FWidgetPath& NewWidgetPath, const FFocusEvent& InFocusEvent) override;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
@@ -35,8 +36,12 @@ private:
 
 	UFUNCTION()
 	void UseFocusedItem();
+	
 	void SetContextMenuVisible(bool bContextMenuVisible);
 	void ToggleContextMenu(const FInventoryItemHandle& ItemHandle);
+	void ClearContextMenu();
+
+	FInventoryItemHandle CurrentFocusedItemHandle;
 	
 	UPROPERTY(meta = (BindWidget))
 	UWrapBox* ItemList;
