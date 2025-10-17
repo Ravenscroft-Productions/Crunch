@@ -28,6 +28,7 @@ public:
 	FOnItemRemovedDelegate OnItemRemoved;
 	void TryActivateItem(const FInventoryItemHandle& ItemHandle);
 	void TryPurchase(const UPDA_ShopItem* ItemToPurchase);
+	void SellItem(const FInventoryItemHandle& ItemHandle);
 	float GetGold() const;
 	FORCEINLINE int GetCapacity() const { return Capacity; }
 	
@@ -61,6 +62,9 @@ private:
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_ActivateItem(FInventoryItemHandle ItemHandle);
+
+	UFUNCTION(Server, Reliable, WithValidation)
+	void Server_SellItem(FInventoryItemHandle ItemHandle);
 	
 	void GrantItem(const UPDA_ShopItem* NewItem);
 	void ConsumeItem(UInventoryItem* Item);
