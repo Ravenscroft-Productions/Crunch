@@ -38,6 +38,16 @@ bool UCAssetManager::GetLoadedShopItems(TArray<const UPDA_ShopItem*>& OutItems) 
 	return bLoaded;
 }
 
+const FItemCollection* UCAssetManager::GetCombinationForItem(const UPDA_ShopItem* Item) const
+{
+	return CombinationMap.Find(Item);
+}
+
+const FItemCollection* UCAssetManager::GetIngredientForItem(const UPDA_ShopItem* Item) const
+{
+	return IngredientMap.Find(Item);
+}
+
 void UCAssetManager::ShopItemsLoadFinished(FStreamableDelegate Callback)
 {
 	Callback.ExecuteIfBound();

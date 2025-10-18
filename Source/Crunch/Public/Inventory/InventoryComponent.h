@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InventoryItem.h"
+#include "PDA_ShopItem.h"
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
@@ -38,7 +39,9 @@ public:
 	bool IsFullFor(const UPDA_ShopItem* Item) const;
 	
 	bool IsAllSlotOccupied() const;
-	UInventoryItem* GetAvailableStackForItem(const UPDA_ShopItem* Item) const; 
+	UInventoryItem* GetAvailableStackForItem(const UPDA_ShopItem* Item) const;
+	bool FoundIngredientForItem(const UPDA_ShopItem* Item, TArray<UInventoryItem*>& OutIngredients);
+	UInventoryItem* TryGetItemForShopItem(const UPDA_ShopItem* Item) const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -69,6 +72,7 @@ private:
 	void GrantItem(const UPDA_ShopItem* NewItem);
 	void ConsumeItem(UInventoryItem* Item);
 	void RemoveItem(UInventoryItem* Item);
+	void CheckItemCombination(const UInventoryItem* NewItem);
 
 	/*************************************************************/
 	/*                           Client                          */
