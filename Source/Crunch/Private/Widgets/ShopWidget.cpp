@@ -6,6 +6,7 @@
 #include "Components/TileView.h"
 #include "Framework/CAssetManager.h"
 #include "Inventory/InventoryComponent.h"
+#include "Widgets/ItemTreeWidget.h"
 #include "Widgets/ShopItemWidget.h"
 
 void UShopWidget::NativeConstruct()
@@ -44,7 +45,16 @@ void UShopWidget::ShopItemWidgetGenerated(UUserWidget& NewWidget)
 		if (OwnerInventoryComponent)
 		{
 			ItemWidget->OnItemPurchaseIssued.AddUObject(OwnerInventoryComponent, &UInventoryComponent::TryPurchase);
-		}		
+		}
+		ItemWidget->OnShopItemClicked.AddUObject(this, &UShopWidget::ShowItemCombination);
 		ItemsMap.Add(ItemWidget->GetShopItem(), ItemWidget);
+	}
+}
+
+void UShopWidget::ShowItemCombination(const UShopItemWidget* ItemWidget)
+{
+	if (CombinationTree)
+	{
+		CombinationTree->DrawFromNode(ItemWidget);
 	}
 }
