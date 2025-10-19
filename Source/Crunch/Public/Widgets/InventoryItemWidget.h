@@ -75,5 +75,30 @@ private:
 
 public:
 	void StartCooldown(float CooldownDuration, float TimeRemaining);
-	
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Cooldown")
+	float CooldownUpdateInterval = 0.1f;
+
+	void CooldownFinished();
+	void UpdateCooldown();
+	void ClearCooldown();
+
+	FTimerHandle CooldownDurationTimerHandle;
+	FTimerHandle CooldownUpdateTimerHandle;
+
+	float CooldownTimeRemaining = 0.0f;
+	float CooldownTimeDuration = 0.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Cooldown")
+	FName CooldownAmtDynamicMaterialParamName = "Percent";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Cooldown")
+	FName IconTextureDynamicMaterialParamName = "Icon";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Cooldown")
+	FName CanCastDynamicMaterialParamName = "CanCast";
+
+	virtual void SetIcon(UTexture2D* IconTexture) override;
+	FNumberFormattingOptions CooldownDisplayFormattingOptions;
 };
