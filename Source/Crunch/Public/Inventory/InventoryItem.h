@@ -8,6 +8,7 @@
 #include "UObject/Object.h"
 #include "InventoryItem.generated.h"
 
+class UGameplayAbility;
 class UAbilitySystemComponent;
 class UPDA_ShopItem;
 
@@ -57,6 +58,8 @@ public:
 	bool IsStackFull() const;
 	
 	bool IsForItem(const UPDA_ShopItem* Item) const;
+	bool IsGrantingAbility(TSubclassOf<UGameplayAbility> AbilityClass) const;
+	bool IsGrantingAnyAbility() const;
 	
 	UInventoryItem();
 	bool IsValid() const;
