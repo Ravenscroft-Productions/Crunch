@@ -44,6 +44,7 @@ public:
 	UInventoryItem* GetAvailableStackForItem(const UPDA_ShopItem* Item) const;
 	bool FindIngredientForItem(const UPDA_ShopItem* Item, TArray<UInventoryItem*>& OutIngredients, const TArray<const UPDA_ShopItem*>& IngredientToIgnore = TArray<const UPDA_ShopItem*>());
 	UInventoryItem* TryGetItemForShopItem(const UPDA_ShopItem* Item) const;
+	void TryActivateItemInSlot(int SlotNumber);
 
 protected:
 	virtual void BeginPlay() override;
