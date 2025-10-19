@@ -224,7 +224,8 @@ void UInventoryComponent::GrantItem(const UPDA_ShopItem* NewItem)
 		InventoryMap.Add(NewHandle, InventoryItem);
 		OnItemAdded.Broadcast(InventoryItem);
 		UE_LOG(LogTemp, Warning, TEXT("Server Adding Shop Item: %s, with Id: %d"), *InventoryItem->GetShopItem()->GetItemName().ToString(), NewHandle.GetHandleId());
-		Client_ItemAdded(NewHandle, NewItem);
+		FGameplayAbilitySpecHandle GrantedAbilitySpecHandle = InventoryItem->GetGrantedAbilitySpecHandle();
+		Client_ItemAdded(NewHandle, NewItem, GrantedAbilitySpecHandle);
 	}
 }
 
@@ -285,6 +286,8 @@ void UInventoryComponent::Client_ItemRemoved_Implementation(FInventoryItemHandle
 
 	UInventoryItem* InventoryItem = GetInventoryItemByHandle(ItemHandle);
 	if (!InventoryItem) return;
+	
+	InventoryItem->RemoveGASModifications();
 
 	OnItemRemoved.Broadcast(ItemHandle);
 	InventoryMap.Remove(ItemHandle);
@@ -302,12 +305,13 @@ void UInventoryComponent::Client_ItemStackCountChanged_Implementation(FInventory
 	}
 }
 
-void UInventoryComponent::Client_ItemAdded_Implementation(FInventoryItemHandle AssignedHandle, const UPDA_ShopItem* Item)
+void UInventoryComponent::Client_ItemAdded_Implementation(FInventoryItemHandle AssignedHandle, const UPDA_ShopItem* Item, FGameplayAbilitySpecHandle GrantedAbilitySpecHandle)
 {
 	if (GetOwner()->HasAuthority()) return;
 
 	UInventoryItem* InventoryItem = NewObject<UInventoryItem>();
 	InventoryItem->InitItem(AssignedHandle, Item, OwnerAbilitySystemComponent);
+	InventoryItem->SetGrantedAbilitySpecHandle(GrantedAbilitySpecHandle);
 	InventoryMap.Add(AssignedHandle, InventoryItem);
 	OnItemAdded.Broadcast(InventoryItem);
 	UE_LOG(LogTemp, Warning, TEXT("Client Adding Shop Item: %s, with Id: %d"), *InventoryItem->GetShopItem()->GetItemName().ToString(), AssignedHandle.GetHandleId());

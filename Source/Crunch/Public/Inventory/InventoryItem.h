@@ -5,12 +5,15 @@
 #include "CoreMinimal.h"
 #include "ActiveGameplayEffectHandle.h"
 #include "GameplayAbilitySpecHandle.h"
+#include "GAS/CAttributeSet.h"
 #include "UObject/Object.h"
 #include "InventoryItem.generated.h"
 
 class UGameplayAbility;
 class UAbilitySystemComponent;
 class UPDA_ShopItem;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilityCanCastUpdatedDelegate, bool /*bCanCast*/)
 
 USTRUCT()
 struct FInventoryItemHandle
@@ -45,7 +48,7 @@ class CRUNCH_API UInventoryItem : public UObject
 {
 	GENERATED_BODY()
 public:
-
+	FOnAbilityCanCastUpdatedDelegate OnAbilityCanCastUpdated;
 	// Returns true if was able to add.
 	bool AddStackCount();
 
@@ -77,10 +80,13 @@ public:
 	float GetAbilityCooldownDuration() const;
 	float GetAbilityManaCost() const;
 	bool CanCastAbility() const;
+	FGameplayAbilitySpecHandle GetGrantedAbilitySpecHandle() const { return GrantedAbilitySpecHandle; }
+	void SetGrantedAbilitySpecHandle(FGameplayAbilitySpecHandle SpecHandle) { GrantedAbilitySpecHandle = SpecHandle; }
 	
 private:
 	void ApplyGASModifications();
 	UAbilitySystemComponent* OwnerAbilitySystemComponent;
+	void ManaUpdated(const FOnAttributeChangeData& ChangeData);
 	
 	UPROPERTY()
 	const UPDA_ShopItem* ShopItem;

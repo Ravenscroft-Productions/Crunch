@@ -28,6 +28,8 @@ void UInventoryItemWidget::SetSlotNumber(int NewSlotNumber)
 
 void UInventoryItemWidget::UpdateInventoryItem(const UInventoryItem* Item)
 {
+	UnbindCanCastAbilityDelegate();
+	
 	InventoryItem = Item;
 	if (!InventoryItem || !InventoryItem->IsValid() || InventoryItem->GetStackCount() <= 0)
 	{
@@ -71,6 +73,7 @@ void UInventoryItemWidget::UpdateInventoryItem(const UInventoryItem* Item)
 
 		CooldownDurationText->SetVisibility(AbilityCooldownDuration == 0.0f ? ESlateVisibility::Hidden : ESlateVisibility::Visible);
 		CooldownDurationText->SetText(FText::AsNumber(AbilityCooldownDuration));
+		BindCanCastAbilityDelegate();
 	}
 	else
 	{
@@ -84,6 +87,7 @@ void UInventoryItemWidget::UpdateInventoryItem(const UInventoryItem* Item)
 void UInventoryItemWidget::EmptySlot()
 {
 	ClearCooldown();
+	UnbindCanCastAbilityDelegate();
 	InventoryItem = nullptr;
 	SetIcon(EmptyTexture);
 	SetToolTip(nullptr);
@@ -181,6 +185,22 @@ void UInventoryItemWidget::StartCooldown(float CooldownDuration, float TimeRemai
 	GetWorld()->GetTimerManager().SetTimer(CooldownUpdateTimerHandle, this, &UInventoryItemWidget::UpdateCooldown, CooldownUpdateInterval, true);
 
 	CooldownCountText->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UInventoryItemWidget::BindCanCastAbilityDelegate()
+{
+	if (InventoryItem)
+	{
+		const_cast<UInventoryItem*>(InventoryItem)->OnAbilityCanCastUpdated.AddUObject(this, &UInventoryItemWidget::UpdateCanCastDisplay);
+	}
+}
+
+void UInventoryItemWidget::UnbindCanCastAbilityDelegate()
+{
+	if (InventoryItem)
+	{
+		const_cast<UInventoryItem*>(InventoryItem)->OnAbilityCanCastUpdated.RemoveAll(this);
+	}
 }
 
 void UInventoryItemWidget::CooldownFinished()
