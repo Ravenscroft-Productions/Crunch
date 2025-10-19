@@ -38,6 +38,8 @@ public:
 	FInventoryItemHandle GetItemHandle() const;
 		
 private:
+	void UpdateCanCastDisplay(bool bCanCast);
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Visual")
 	UTexture2D* EmptyTexture;
 	
