@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "StormCore.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnGoalReachedDelegate, AActor* /*ViewTarget*/, int /*WiningTeam*/);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnTeamInfluencerCountUpdatedDelegate, int /*TeamOneInfluencerCount*/, int /*TeamTwoInfluencerCount*/);
+
 class UCameraComponent;
 class AAIController;
 class USphereComponent;
@@ -16,7 +19,11 @@ class CRUNCH_API AStormCore : public ACharacter
 	GENERATED_BODY()
 
 public:
+	FOnGoalReachedDelegate OnGoalReached;
+	FOnTeamInfluencerCountUpdatedDelegate OnTeamInfluencerCountUpdated;
+	
 	AStormCore();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -30,6 +37,12 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Move")
+	UAnimMontage* ExpandMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Move")
+	UAnimMontage* CaptureMontage;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Move")
 	float InfluenceRadius = 1000.0f;
 	
@@ -59,6 +72,25 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Team")
 	AActor* TeamTwoGoal;
+
+	UPROPERTY(EditAnywhere, Category = "Team")
+	AActor* TeamOneCore;
+
+	UPROPERTY(EditAnywhere, Category = "Team")
+	AActor* TeamTwoCore;
+
+	UPROPERTY(ReplicatedUsing = OnRep_CoreToCapture)
+	AActor* CoreToCapture;
+
+	float CoreCaptureSpeed = 0.0f;
+
+	UFUNCTION()
+	void OnRep_CoreToCapture();
+
+	void GoalReached(int WiningTeam);
+
+	void CaptureCore();
+	void ExpandFinished();
 	
 	int TeamOneInfluencerCount = 0;
 	int TeamTwoInfluencerCount = 0;
