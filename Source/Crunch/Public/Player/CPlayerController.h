@@ -56,6 +56,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* ShopToggleInputAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UInputAction* ToggleGameplayMenuInputAction;
+	
 	UFUNCTION()
 	void ToggleShop();
+
+	UFUNCTION()
+	void ToggleGameplayMenu();
 };

@@ -4,6 +4,7 @@
 #include "Widgets/GameplayMenu.h"
 
 #include "Components/Button.h"
+#include "Components/TextBlock.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void UGameplayMenu::NativeConstruct()
@@ -12,6 +13,11 @@ void UGameplayMenu::NativeConstruct()
 
 	MainMenuBtn->OnClicked.AddDynamic(this, &UGameplayMenu::BackToMainMenu);
 	QuitGameBtn->OnClicked.AddDynamic(this, &UGameplayMenu::QuitGame);
+}
+
+void UGameplayMenu::SetTitleText(const FString& NewTitle)
+{
+	MenuTitle->SetText(FText::FromString(NewTitle));
 }
 
 FOnButtonClickedEvent& UGameplayMenu::GetResumeButtonClickedEventDelegate()

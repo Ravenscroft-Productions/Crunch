@@ -6,6 +6,9 @@
 #include "Blueprint/UserWidget.h"
 #include "GameplayWidget.generated.h"
 
+class UCanvasPanel;
+class UWidgetSwitcher;
+class UGameplayMenu;
 class UMatchStatWidget;
 class USkeletalMeshRenderWidget;
 class UInventoryWidget;
@@ -27,6 +30,12 @@ public:
 	virtual void NativeConstruct() override;
 	void ConfigureAbilities(const TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>>& Abilities);
 	void ToggleShop();
+
+	UFUNCTION()
+	void ToggleGameplayMenu();
+	
+	void ShowGameplayMenu();
+	void SetGameplayMenuTitle(const FString& NewTitle);
 	
 private:
 	UPROPERTY(meta=(BindWidget))
@@ -64,6 +73,18 @@ private:
 
 	UPROPERTY(meta=(BindWidget))
 	UMatchStatWidget* MatchStatWidget;
+
+	UPROPERTY(meta=(BindWidget))
+	UGameplayMenu* GameplayMenu;
+
+	UPROPERTY(meta=(BindWidget))
+	UWidgetSwitcher* MainSwitcher;
+
+	UPROPERTY(meta=(BindWidget))
+	UCanvasPanel* GameplayWidgetRootPanel;
+
+	UPROPERTY(meta=(BindWidget))
+	UCanvasPanel* GameplayMenuRootPanel;
 
 	UPROPERTY(Transient, meta= (BindWidgetAnim))
 	UWidgetAnimation* ShopPopupAnimation;
