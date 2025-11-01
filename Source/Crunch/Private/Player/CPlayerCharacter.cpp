@@ -71,6 +71,12 @@ void ACPlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	}
 }
 
+void ACPlayerCharacter::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
+{
+	OutLocation = ViewCam->GetComponentLocation();
+	OutRotation = ViewCam->GetComponentRotation();
+}
+
 void ACPlayerCharacter::HandleLookInput(const FInputActionValue& InputActionValue)
 {
 	FVector2D InputVal = InputActionValue.Get<FVector2D>();
@@ -179,10 +185,8 @@ FVector ACPlayerCharacter::GetMoveFwdDir() const
 
 void ACPlayerCharacter::OnAimStateChanged(bool bIsAiming)
 {
-	if (IsLocallyControlledByPlayer())
-	{
-		LerpCameraToLocalOffsetLocation(bIsAiming ? CameraAimLocalOffset : FVector{0.0f});
-	}
+	// if (IsLocallyControlledByPlayer())
+	LerpCameraToLocalOffsetLocation(bIsAiming ? CameraAimLocalOffset : FVector{0.0f});
 }
 
 void ACPlayerCharacter::LerpCameraToLocalOffsetLocation(const FVector& Goal)
