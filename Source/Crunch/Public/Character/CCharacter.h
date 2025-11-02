@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "GenericTeamAgentInterface.h"
 #include "GAS/CGameplayAbilityTypes.h"
+#include "Widgets/RenderActorTargetInterface.h"
 #include "CCharacter.generated.h"
 
 class UAIPerceptionStimuliSourceComponent;
@@ -16,7 +17,7 @@ class UCAttributeSet;
 class UCAbilitySystemComponent;
 
 UCLASS()
-class CRUNCH_API ACCharacter : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface
+class CRUNCH_API ACCharacter : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface, public IRenderActorTargetInterface
 {
 	GENERATED_BODY()
 
@@ -31,6 +32,8 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	const TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>>& GetAbilities() const;
+	virtual FVector GetCaptureLocalPosition() const override;
+	virtual FRotator GetCaptureLocalRotation() const override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -71,6 +74,12 @@ private:
 
 	UPROPERTY()
 	UCAttributeSet* CAttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Capture")
+	FVector HeadshotCaptureLocalPosition;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Capture")
+	FRotator HeadshotCaptureLocalRotation;
 	
 	/**********************************************************************/
 	/*                                   UI                               */
