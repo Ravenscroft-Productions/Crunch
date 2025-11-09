@@ -20,6 +20,15 @@ public:
 	static FGameplayTag GetShootTag();
 	
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	float TargetRange = 4000.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	float DetectionCylinderRadius = 30.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	float TargetingInterval = 0.3f;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	TSubclassOf<UGameplayEffect> OnGoingConsumptionEffect;
 
@@ -28,10 +37,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Anim")
 	UAnimMontage* LaserMontage;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Targetting")
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	FName TargetActorAttachSocketName = "Laser";
 
-	UPROPERTY(EditDefaultsOnly, Category = "Targetting")
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	TSubclassOf<ATargetActor_Line> LaserTargetActorClass;
 	
 	UFUNCTION()
