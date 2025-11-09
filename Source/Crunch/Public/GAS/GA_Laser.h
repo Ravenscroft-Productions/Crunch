@@ -6,6 +6,7 @@
 #include "CGameplayAbility.h"
 #include "GA_Laser.generated.h"
 
+class ATargetActor_Line;
 /**
  * 
  */
@@ -26,9 +27,18 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Anim")
 	UAnimMontage* LaserMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Targetting")
+	FName TargetActorAttachSocketName = "Laser";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Targetting")
+	TSubclassOf<ATargetActor_Line> LaserTargetActorClass;
 	
 	UFUNCTION()
 	void ShootLaser(FGameplayEventData Payload);
 
 	void ManaUpdated(const FOnAttributeChangeData& ChangeData);
+
+	UFUNCTION()
+	void TargetReceived(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 };
