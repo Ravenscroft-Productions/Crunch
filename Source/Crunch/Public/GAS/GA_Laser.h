@@ -32,6 +32,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	TSubclassOf<UGameplayEffect> OnGoingConsumptionEffect;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	TSubclassOf<UGameplayEffect> HitDamageEffect;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	float HitPushSpeed = 3000.0f;
+	
 	FActiveGameplayEffectHandle OnGoingConsumptionEffectHandle;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Anim")

@@ -22,6 +22,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void StartTargeting(UGameplayAbility* Ability) override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void BeginDestroy() override;
 	
 private:
 	UPROPERTY(Replicated)
@@ -58,4 +59,5 @@ private:
 
 	void DoTargetCheckAndReport();
 	void UpdateTargetTrace();
+	bool ShouldReportActorAsTarget(const AActor* ActorToCheck) const;
 };

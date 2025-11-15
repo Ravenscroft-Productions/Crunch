@@ -72,12 +72,15 @@ void UGA_Laser::ShootLaser(FGameplayEventData Payload)
 
 	AGameplayAbilityTargetActor* TargetActor;
 	WaitDamageTargetTask->BeginSpawningActor(this, LaserTargetActorClass, TargetActor);
-	WaitDamageTargetTask->FinishSpawningActor(this, TargetActor);
-
 	ATargetActor_Line* LineTargetActor = Cast<ATargetActor_Line>(TargetActor);
 	if (LineTargetActor)
 	{
 		LineTargetActor->ConfigureTargetSetting(TargetRange, DetectionCylinderRadius, TargetingInterval, GetOwnerTeamId(), ShouldDrawDebug());
+	}
+	
+	WaitDamageTargetTask->FinishSpawningActor(this, TargetActor);
+	if (LineTargetActor)
+	{
 		LineTargetActor->AttachToComponent(GetOwningComponentFromActorInfo(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TargetActorAttachSocketName);
 	}
 }
@@ -93,4 +96,9 @@ void UGA_Laser::ManaUpdated(const FOnAttributeChangeData& ChangeData)
 
 void UGA_Laser::TargetReceived(const FGameplayAbilityTargetDataHandle& TargetDataHandle)
 {	
+	if (K2_HasAuthority())
+	{
+		BP_ApplyGameplayEffectToTarget(TargetDataHandle, HitDamageEffect, GetAbilityLevel(CurrentSpecHandle, CurrentActorInfo));
+	}
+	PushTargets(TargetDataHandle, GetAvatarActorFromActorInfo()->GetActorForwardVector() * HitPushSpeed);
 }
