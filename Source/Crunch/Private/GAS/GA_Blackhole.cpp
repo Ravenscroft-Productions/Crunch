@@ -9,7 +9,7 @@
 
 void UGA_Blackhole::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
-	if (HasAuthorityOrPredictionKey(ActorInfo, &ActivationInfo))
+	if (!HasAuthorityOrPredictionKey(ActorInfo, &ActivationInfo))
 	{
 		K2_EndAbility();
 		return;
