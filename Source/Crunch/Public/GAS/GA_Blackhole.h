@@ -6,6 +6,8 @@
 #include "CGameplayAbility.h"
 #include "GA_Blackhole.generated.h"
 
+class UAbilityTask_WaitTargetData;
+class ATA_Blackhole;
 class UAbilityTask_PlayMontageAndWait;
 class ATargetActor_GroundPick;
 /**
@@ -21,13 +23,22 @@ public:
 		
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
-	float TargetAreaRadius = 300.0f;
+	float TargetAreaRadius = 1000.0f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	float BlackholePullSpeed = 3000.0f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	float BlackholeDuration = 6.0f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	float TargetTraceRange = 2000.0f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* TargetingMontage;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* HoldBlackholeMontage;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	TSubclassOf<UGameplayEffect> AimEffect;
@@ -37,14 +48,23 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	TSubclassOf<ATargetActor_GroundPick> TargetActorClass;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
+	TSubclassOf<ATA_Blackhole> BlackholeTargetActorClass;
+	
 	UPROPERTY()
 	UAbilityTask_PlayMontageAndWait* PlayCastBlackholeMontageTask;
+	
+	UPROPERTY()
+	UAbilityTask_WaitTargetData* BlackholeTargetingTask;
 	
 	UFUNCTION()
 	void PlaceBlackhole(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 	
 	UFUNCTION()
 	void PlacementCancelled(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
+	
+	UFUNCTION()
+	void FinalTargetReceived(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 	
 	void AddAimEffect();
 	void RemoveAimEffect();
