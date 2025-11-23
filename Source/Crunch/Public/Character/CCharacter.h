@@ -51,6 +51,7 @@ public:
 	/**********************************************************************/
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	FORCEINLINE bool GetIsInFocusMode() const { return bIsInFocusMode; }
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_SendGameplayEventToSelf(const FGameplayTag& EventTag, const FGameplayEventData& EventData);
@@ -63,6 +64,10 @@ private:
 	void DeathTagUpdated(const FGameplayTag Tag, int32 NewCount);
 	void StunTagUpdated(const FGameplayTag Tag, int32 NewCount);
 	void AimTagUpdated(const FGameplayTag Tag, int32 NewCount);
+	void FocusTagUpdated(const FGameplayTag Tag, int32 NewCount);
+	
+	bool bIsInFocusMode = false;
+	
 	void MoveSpeedUpdated(const FOnAttributeChangeData& Data);
 	void MaxHealthUpdated(const FOnAttributeChangeData& Data);
 	void MaxManaUpdated(const FOnAttributeChangeData& Data);
