@@ -40,6 +40,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* HoldBlackholeMontage;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* FinalBlowMontage;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	TSubclassOf<UGameplayEffect> AimEffect;
 	
@@ -50,6 +53,12 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Targeting")
 	TSubclassOf<ATA_Blackhole> BlackholeTargetActorClass;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Effect")
+	TSubclassOf<UGameplayEffect> FinalBlowDamageEffect;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Effect")
+	float BlowPushSpeed = 3000.0f;
 	
 	UPROPERTY()
 	UAbilityTask_PlayMontageAndWait* PlayCastBlackholeMontageTask;

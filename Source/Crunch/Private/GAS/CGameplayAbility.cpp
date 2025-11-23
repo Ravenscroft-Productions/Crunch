@@ -158,6 +158,24 @@ void UCGameplayAbility::PushTargets(const FGameplayAbilityTargetDataHandle& Targ
 	PushTargets(Targets, PushVel);
 }
 
+void UCGameplayAbility::PushTargetsFromLocation(const FGameplayAbilityTargetDataHandle& TargetDataHandle, const FVector& FromLocation, float PushSpeed)
+{
+	TArray<AActor*> Targets = UAbilitySystemBlueprintLibrary::GetAllActorsFromTargetData(TargetDataHandle);
+	PushTargetsFromLocation(Targets, FromLocation, PushSpeed);
+}
+
+void UCGameplayAbility::PushTargetsFromLocation(const TArray<AActor*>& Targets, const FVector& FromLocation, float PushSpeed)
+{
+	for (AActor* Target : Targets)
+	{
+		FVector PushDir = Target->GetActorLocation() - FromLocation;
+		PushDir.Z = 0.0f;
+		PushDir.Normalize();
+		
+		PushTarget(Target, PushDir * PushSpeed);
+	}
+}
+
 void UCGameplayAbility::PlayMontageLocally(UAnimMontage* MontageToPlay)
 {
 	UAnimInstance* OwnerAnimInstance = GetOwnerAnimInstance();
