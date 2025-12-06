@@ -1,0 +1,16 @@
+// (c)2025 Ravenscroft Productions
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+#include "MenuPlayerController.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class CRUNCH_API AMenuPlayerController : public APlayerController
+{
+	GENERATED_BODY()
+};
