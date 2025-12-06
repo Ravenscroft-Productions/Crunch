@@ -69,6 +69,7 @@ private:
 	bool bIsInFocusMode = false;
 	
 	void MoveSpeedUpdated(const FOnAttributeChangeData& Data);
+	void MoveAccelerationUpdated(const FOnAttributeChangeData& Data);
 	void MaxHealthUpdated(const FOnAttributeChangeData& Data);
 	void MaxManaUpdated(const FOnAttributeChangeData& Data);
 	void SetIsAiming(bool bIsAiming);

@@ -24,8 +24,7 @@ void UGA_Shoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 		K2_EndAbility();
 		return;
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Shoot Ability Activated"));
+	
 	if (HasAuthorityOrPredictionKey(ActorInfo, &ActivationInfo))
 	{
 		UAbilityTask_WaitGameplayEvent* WaitStartShootingEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, UCAbilitySystemStatics::GetBasicAttackInputPressedTag());
@@ -44,7 +43,6 @@ void UGA_Shoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 
 void UGA_Shoot::InputReleased(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Shoot Ability Ended"));
 	K2_EndAbility();
 }
 
@@ -69,7 +67,6 @@ FGameplayTag UGA_Shoot::GetShootTag()
 
 void UGA_Shoot::StartShooting(FGameplayEventData Payload)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Start Shooting"));
 	if (HasAuthority(&CurrentActivationInfo))
 	{
 		UAbilityTask_PlayMontageAndWait* PlayShootMontage = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, ShootMontage);
@@ -86,7 +83,6 @@ void UGA_Shoot::StartShooting(FGameplayEventData Payload)
 
 void UGA_Shoot::StopShooting(FGameplayEventData Payload)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Stop Shooting"));
 	if (ShootMontage)
 	{
 		StopMontageAfterCurrentSection(ShootMontage);
@@ -97,7 +93,6 @@ void UGA_Shoot::StopShooting(FGameplayEventData Payload)
 
 void UGA_Shoot::ShootProjectile(FGameplayEventData Payload)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Shoot Projectile"));
 	if (K2_HasAuthority())
 	{
 		AActor* OwnerAvatarActor = GetAvatarActorFromActorInfo();
