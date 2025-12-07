@@ -2,3 +2,8 @@
 
 
 #include "Framework/LobbyGameMode.h"
+
+ALobbyGameMode::ALobbyGameMode()
+{
+	bUseSeamlessTravel = true;
+}
