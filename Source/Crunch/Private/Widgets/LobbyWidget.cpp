@@ -3,10 +3,13 @@
 
 #include "Widgets/LobbyWidget.h"
 
+#include "Character/PA_CharacterDefinition.h"
 #include "Components/Button.h"
 #include "Components/UniformGridPanel.h"
 #include "Components/UniformGridSlot.h"
 #include "Components/WidgetSwitcher.h"
+#include "Engine/StreamableManager.h"
+#include "Framework/CAssetManager.h"
 #include "Framework/CGameState.h"
 #include "Network/CNetStatics.h"
 #include "Player/LobbyPlayerController.h"
@@ -24,6 +27,8 @@ void ULobbyWidget::NativeConstruct()
 	}
 	StartHeroSelectionButton->SetIsEnabled(false);
 	StartHeroSelectionButton->OnClicked.AddDynamic(this, &ULobbyWidget::StartHeroSelectionButtonClicked);
+	
+	UCAssetManager::Get().LoadCharacterDefinitions(FStreamableDelegate::CreateUObject(this, &ULobbyWidget::CharacterDefinitionLoaded));
 }
 
 void ULobbyWidget::ClearAndPopulateTeamSelectionSlots()
@@ -108,4 +113,16 @@ void ULobbyWidget::StartHeroSelectionButtonClicked()
 void ULobbyWidget::SwitchToHeroSelection()
 {
 	MainSwitcher->SetActiveWidget(HeroSelectionRoot);
+}
+
+void ULobbyWidget::CharacterDefinitionLoaded()
+{
+	TArray<UPA_CharacterDefinition*> LoadedCharacterDefinitions;
+	if (UCAssetManager::Get().GetLoadedCharacterDefinitions(LoadedCharacterDefinitions))
+	{
+		for (UPA_CharacterDefinition* LoadedCharacterDefinition : LoadedCharacterDefinitions)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Loaded Character: %s"), *(LoadedCharacterDefinition->GetCharacterDisplayName()));
+		}
+	}
 }
