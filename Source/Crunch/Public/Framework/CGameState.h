@@ -22,6 +22,7 @@ public:
 	bool IsSlotOccupied(uint8 SlotId) const;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	const TArray<FPlayerSelection>& GetPlayerSelection() const;
+	bool CanStartHeroSelection() const;
 	
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_PlayerSelectionArray)

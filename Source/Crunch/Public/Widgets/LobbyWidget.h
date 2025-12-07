@@ -31,6 +31,9 @@ private:
 	UWidget* TeamSelectionRoot;
 	
 	UPROPERTY(meta = (BindWidget))
+	UWidget* HeroSelectionRoot;
+	
+	UPROPERTY(meta = (BindWidget))
 	UButton* StartHeroSelectionButton;
 	
 	UPROPERTY(meta = (BindWidget))
@@ -55,4 +58,9 @@ private:
 	ACGameState* CGameState;
 	
 	void UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& PlayerSelections);
+	
+	UFUNCTION()
+	void StartHeroSelectionButtonClicked();
+	
+	void SwitchToHeroSelection();
 };
