@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACGameState;
+class ALobbyPlayerController;
 class UTeamSelectionWidget;
 class UUniformGridPanel;
 class UButton;
@@ -41,4 +44,15 @@ private:
 	
 	void ClearAndPopulateTeamSelectionSlots();
 	void SlotSelected(uint8 NewSlotID);
+	void ConfigureGameState();
+	
+	FTimerHandle ConfigureGameStateTimerHandle;
+	
+	UPROPERTY()
+	ALobbyPlayerController* LobbyPlayerController;
+	
+	UPROPERTY()
+	ACGameState* CGameState;
+	
+	void UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& PlayerSelections);
 };
