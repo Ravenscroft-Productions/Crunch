@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACharacterDisplay;
 class ACPlayerState;
 class UTileView;
 class ACGameState;
@@ -72,5 +73,14 @@ private:
 	
 	void SwitchToHeroSelection();
 	void CharacterDefinitionLoaded();
-	void CharacterSelected(UObject* SelectedUObject);	
+	void CharacterSelected(UObject* SelectedUObject);
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Character Display")
+	TSubclassOf<ACharacterDisplay> CharacterDisplayClass;
+	
+	UPROPERTY()
+	ACharacterDisplay* CharacterDisplay;
+	
+	void SpawnCharacterDisplay();
+	void UpdateCharacterDisplay(const FPlayerSelection& PlayerSelection);
 };
