@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACPlayerState;
 class UTileView;
 class ACGameState;
 class ALobbyPlayerController;
@@ -59,6 +60,9 @@ private:
 	ALobbyPlayerController* LobbyPlayerController;
 	
 	UPROPERTY()
+	ACPlayerState* CPlayerState;
+	
+	UPROPERTY()
 	ACGameState* CGameState;
 	
 	void UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& PlayerSelections);
@@ -68,4 +72,5 @@ private:
 	
 	void SwitchToHeroSelection();
 	void CharacterDefinitionLoaded();
+	void CharacterSelected(UObject* SelectedUObject);	
 };
