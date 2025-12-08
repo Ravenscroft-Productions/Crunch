@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class UTileView;
 class ACGameState;
 class ALobbyPlayerController;
 class UTeamSelectionWidget;
@@ -32,6 +33,9 @@ private:
 	
 	UPROPERTY(meta = (BindWidget))
 	UWidget* HeroSelectionRoot;
+	
+	UPROPERTY(meta = (BindWidget))
+	UTileView* CharacterSelectionTileView;
 	
 	UPROPERTY(meta = (BindWidget))
 	UButton* StartHeroSelectionButton;
