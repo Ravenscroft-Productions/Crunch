@@ -17,6 +17,7 @@
 #include "Network/CNetStatics.h"
 #include "Player/CPlayerState.h"
 #include "Player/LobbyPlayerController.h"
+#include "Widgets/AbilityListView.h"
 #include "Widgets/CharacterDisplay.h"
 #include "Widgets/CharacterEntryWidget.h"
 #include "Widgets/TeamSelectionWidget.h"
@@ -194,4 +195,10 @@ void ULobbyWidget::UpdateCharacterDisplay(const FPlayerSelection& PlayerSelectio
 	if (!PlayerSelection.GetCharacterDefinition()) return;
 	
 	CharacterDisplay->ConfigureWithCharacterDefinition(PlayerSelection.GetCharacterDefinition());
+	AbilityListView->ClearListItems();
+	const TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>>* Abilities = PlayerSelection.GetCharacterDefinition()->GetAbilities();
+	if (Abilities)
+	{
+		AbilityListView->ConfigureAbilities(*Abilities);
+	}
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "GAS/CGameplayAbilityTypes.h"
 #include "PA_CharacterDefinition.generated.h"
 
 class ACCharacter;
@@ -23,6 +24,7 @@ public:
 	TSubclassOf<ACCharacter> LoadCharacterClass() const;
 	TSubclassOf<UAnimInstance> LoadDisplayAnimationBP() const;
 	USkeletalMesh* LoadDisplayMesh() const;
+	const TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>>* GetAbilities() const;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Character")
