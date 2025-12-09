@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilityToolTip.h"
 #include "GameplayAbilitySpecHandle.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/IUserObjectListEntry.h"
@@ -62,6 +63,11 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Visual")
 	FName UpgradePointAvailableParamName = "UpgradeAvailable";
+	
+	UPROPERTY(EditDefaultsOnly, Category = "ToolTip")
+	TSubclassOf<UAbilityToolTip> AbilityToolTipClass;
+	
+	void CreateToolTipWidget(const FAbilityWidgetData* AbilityWidgetData);
 	
 	UPROPERTY(meta = (BindWidget))
 	UImage* Icon;

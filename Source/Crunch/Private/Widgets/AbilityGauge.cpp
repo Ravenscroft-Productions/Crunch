@@ -61,6 +61,22 @@ void UAbilityGauge::ConfigureWithWidgetData(const FAbilityWidgetData* WidgetData
 		Icon->GetDynamicMaterial()->SetTextureParameterValue(IconMaterialParamName, WidgetData->Icon.LoadSynchronous());
 		// Added To Stop Ability Starting Fully Shaded (Max Cooldown)
 		Icon->GetDynamicMaterial()->SetScalarParameterValue(CooldownPercentParamName, 1.0f);
+		CreateToolTipWidget(WidgetData);
+	}
+}
+
+void UAbilityGauge::CreateToolTipWidget(const FAbilityWidgetData* AbilityWidgetData)
+{
+	if (!AbilityWidgetData || !AbilityToolTipClass) return;
+	
+	UAbilityToolTip* InstantiatedToolTip = CreateWidget<UAbilityToolTip>(GetOwningPlayer(), AbilityToolTipClass);
+	if (InstantiatedToolTip)
+	{
+		float CooldownDuration = UCAbilitySystemStatics::GetStaticCooldownDurationForAbility(AbilityCDO);
+		float Cost = UCAbilitySystemStatics::GetStaticCostForAbility(AbilityCDO);
+		InstantiatedToolTip->SetAbilityInfo(AbilityWidgetData->AbilityName, AbilityWidgetData->Icon.LoadSynchronous(), AbilityWidgetData->Description, CooldownDuration, Cost);
+		
+		SetToolTip(InstantiatedToolTip);
 	}
 }
 
