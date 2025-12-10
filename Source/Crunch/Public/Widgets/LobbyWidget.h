@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class UPlayerTeamLayoutWidget;
 class UAbilityListView;
 class ACharacterDisplay;
 class ACPlayerState;
@@ -42,6 +43,9 @@ private:
 	
 	UPROPERTY(meta = (BindWidget))
 	UAbilityListView* AbilityListView;
+	
+	UPROPERTY(meta = (BindWidget))
+	UPlayerTeamLayoutWidget* PlayerTeamLayoutWidget;
 	
 	UPROPERTY(meta = (BindWidget))
 	UButton* StartHeroSelectionButton;
