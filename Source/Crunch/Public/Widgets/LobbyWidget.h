@@ -48,6 +48,9 @@ private:
 	UPlayerTeamLayoutWidget* PlayerTeamLayoutWidget;
 	
 	UPROPERTY(meta = (BindWidget))
+	UButton* StartMatchButton;
+	
+	UPROPERTY(meta = (BindWidget))
 	UButton* StartHeroSelectionButton;
 	
 	UPROPERTY(meta = (BindWidget))
@@ -78,6 +81,9 @@ private:
 	
 	UFUNCTION()
 	void StartHeroSelectionButtonClicked();
+	
+	UFUNCTION()
+	void StartMatchButtonClicked();
 	
 	void SwitchToHeroSelection();
 	void CharacterDefinitionLoaded();
