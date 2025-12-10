@@ -17,7 +17,7 @@ void UPlayerTeamLayoutWidget::NativeConstruct()
 	
 	if (!PlayerTeamSlotWidgetClass) return;
 	
-	for (int i = 0; i < UCNetStatics::GetPlayerCountPerTeam() + 2; ++i)
+	for (int i = 0; i < UCNetStatics::GetPlayerCountPerTeam() * 2; ++i)
 	{
 		UPlayerTeamSlotWidget* NewSlotWidget = CreateWidget<UPlayerTeamSlotWidget>(GetOwningPlayer(), PlayerTeamSlotWidgetClass);
 		TeamSlotWidgets.Add(NewSlotWidget);
